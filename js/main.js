@@ -10,6 +10,7 @@ const buttonCancelForm = document.querySelector('.js-btn-cancel');
 const inputDesc = document.querySelector('.js-input-desc');
 const inputPhoto = document.querySelector('.js-input-photo');
 const inputName = document.querySelector('.js-input-name');
+const inputRace = document.querySelector('.js-input-race');
 const linkNewFormElememt = document.querySelector('.js-button-new-form');
 const labelMessageError = document.querySelector('.js-label-error');
 const input_search_desc = document.querySelector('.js_in_search_desc');
@@ -82,17 +83,31 @@ function handleClickNewCatForm(event) {
 //Adicionar nuevo gatito
 function addNewKitten(event) {
     event.preventDefault();
-    const valueDesc = inputDesc.value;
-    const valuePhoto = inputPhoto.value;
-    const valueName = inputName.value;
-    if (valueDesc === "" && valuePhoto === "" && valueName === "") {
+    const newKittenDataObject = {
+        photo:inputPhoto.value,
+        name:inputName.value,
+        race:inputRace.value,
+        desc:inputDesc.value,
+    };
+    if (newKittenDataObject.desc === "" || newKittenDataObject.photo === "" || newKittenDataObject.name === "") {
         labelMessageError.innerHTML = "¡Uy! parece que has olvidado algo";
     } else {
-        if (valueDesc !== "" && valuePhoto !== "" && valueName !== "") {
-            labelMessageError.innerHTML = "";
+        if (newKittenDataObject.desc !== "" && newKittenDataObject.photo !== "" && newKittenDataObject.name !== "") {
+            labelMessageError.innerHTML = "Mola! Un nuevo gatito en Adalab!";
+            kittenDataList.push(newKittenDataObject);
         }
-    }
+    };   
+    return newKittenDataObject;
+    renderKittenList(kittenDataList);
+    console.log(kittenDataList);
 }
+
+//https://dev.adalab.es/maine-coon-cat.webp
+
+
+
+
+
 //Cancelar la búsqueda de un gatito
 function cancelNewKitten(event) {
     event.preventDefault();
