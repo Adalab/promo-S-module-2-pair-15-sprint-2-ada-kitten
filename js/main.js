@@ -14,6 +14,7 @@ const inputRace = document.querySelector('.js-input-race');
 const linkNewFormElememt = document.querySelector('.js-button-new-form');
 const labelMessageError = document.querySelector('.js-label-error');
 const input_search_desc = document.querySelector('.js_in_search_desc');
+const input_search_race = document.querySelector('.js_in_search_race');
 
 
 //Objetos con cada gatito
@@ -83,23 +84,31 @@ function handleClickNewCatForm(event) {
 //Adicionar nuevo gatito
 function addNewKitten(event) {
     event.preventDefault();
-    const newKittenDataObject = {
-        photo:inputPhoto.value,
-        name:inputName.value,
-        race:inputRace.value,
-        desc:inputDesc.value,
-    };
-    if (newKittenDataObject.desc === "" || newKittenDataObject.photo === "" || newKittenDataObject.name === "") {
+    const valueDesc = inputDesc.value;
+    const valuePhoto = inputPhoto.value;
+    const valueName = inputName.value;
+    const valueRace = inputRace.value;
+   
+    if (valueDesc === "" || valuePhoto === "" || valueName === "") {
         labelMessageError.innerHTML = "¡Uy! parece que has olvidado algo";
     } else {
-        if (newKittenDataObject.desc !== "" && newKittenDataObject.photo !== "" && newKittenDataObject.name !== "") {
+        if (valueDesc !== "" && valuePhoto !== "" && valueName !== "") {
             labelMessageError.innerHTML = "Mola! Un nuevo gatito en Adalab!";
+            const newKittenDataObject = {
+                photo:valuePhoto,
+                name:valueName,
+                race:valueRace,
+                desc:valueDesc,
+            };
             kittenDataList.push(newKittenDataObject);
+            inputDesc.value = '';
+            inputPhoto.value = '';
+            inputName.value = '';
+            inputRace.value = '';
+            renderKittenList(kittenDataList);
         }
     };   
-    return newKittenDataObject;
-    renderKittenList(kittenDataList);
-    console.log(kittenDataList);
+
 }
 
 //https://dev.adalab.es/maine-coon-cat.webp
@@ -120,13 +129,12 @@ function cancelNewKitten(event) {
 //Filtrar por descripción
 function filterKitten(event) {
     event.preventDefault();
-    const descrSearchText = input_search_desc.value;
+    const descrSearchText = input_search_desc.value.toLowerCase();
+    const raceSearchText = input_search_race.value.toLowerCase();
     listElement.innerHTML = "";
-    for (const kittenItem of kittenDataList) {
-        if (kittenItem.desc.includes(descrSearchText)) {
-            listElement.innerHTML += renderKitten(kittenItem);
-        }
-    }
+    const kittenListFiltered = kittenDataList.filter((cat) => cat.desc.toLowerCase().includes(descrSearchText))
+    .filter((cat) => cat.race.toLowerCase().includes(raceSearchText));
+    renderKittenList(kittenListFiltered);
 }
 
 //Mostrar el litado de gatitos en ell HTML

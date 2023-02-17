@@ -93,8 +93,8 @@ La solución del ejercicio completo se subirá al final del módulo, si en una s
 
 #### 2.12 Métodos funcionales de arrays
 
-- [ ] 1. **FILTRAR:** Filtrar por descripción
-- [ ] 2. **FILTRAR:** Filtrar por descripción y por raza
+- [x] 1. **FILTRAR:** Filtrar por descripción
+- [x] 2. **FILTRAR:** Filtrar por descripción y por raza
 
 #### 2.13 Peticiones al servidor I
 
