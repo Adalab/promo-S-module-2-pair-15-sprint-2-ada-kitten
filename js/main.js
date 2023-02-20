@@ -16,6 +16,9 @@ const labelMessageError = document.querySelector('.js-label-error');
 const input_search_desc = document.querySelector('.js_in_search_desc');
 const input_search_race = document.querySelector('.js_in_search_race');
 
+const GITHUB_USER = 'marinacr92';
+const SERVER_URL = `https://dev.adalab.es/api/kittens/${GITHUB_USER}`;
+
 
 //Objetos con cada gatito
 const kittenData_1 = {
@@ -37,9 +40,23 @@ const kittenData_3 = {
     race: "Maine Coon",
 };
 
-const kittenDataList = [kittenData_1, kittenData_2, kittenData_3];
+let kittenDataList = [];
 
 //Funciones
+
+fetch(SERVER_URL, {
+  method: 'GET',
+  headers: {'Content-Type': 'application/json'},
+}).then((response) => response.json()).then(data =>{
+    console.log(data)
+    kittenDataList = data.results;
+    renderKittenList(kittenDataList);
+}).catch(error =>{
+    console.log('Ha habido un error: ', error)
+})
+
+
+
 function renderKitten(kittenData) {
     const kitten = `<li class="card">
     <article>
@@ -138,7 +155,7 @@ function filterKitten(event) {
 }
 
 //Mostrar el litado de gatitos en ell HTML
-renderKittenList(kittenDataList);
+// renderKittenList(kittenDataList);
 
 //Eventos
 linkNewFormElememt.addEventListener("click", handleClickNewCatForm);
