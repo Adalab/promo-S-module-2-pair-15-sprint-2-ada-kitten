@@ -16,7 +16,7 @@ const labelMessageError = document.querySelector('.js-label-error');
 const input_search_desc = document.querySelector('.js_in_search_desc');
 const input_search_race = document.querySelector('.js_in_search_race');
 
-const GITHUB_USER = 'marinacr92';
+const GITHUB_USER = 'MarianaLobo';
 const SERVER_URL = `https://dev.adalab.es/api/kittens/${GITHUB_USER}`;
 
 
@@ -41,20 +41,25 @@ const kittenData_3 = {
 };
 
 let kittenDataList = [];
-
+const kittenListStored = JSON.parse(localStorage.getItem('kittensList'));
 //Funciones
-
+if (kittenListStored) {
+    kittenDataList = kittenListStored;
+    renderKittenList(kittenDataList);
+    console.log('1');
+  } else {
 fetch(SERVER_URL, {
   method: 'GET',
   headers: {'Content-Type': 'application/json'},
 }).then((response) => response.json()).then(data =>{
-    console.log(data)
+    console.log('2');
+    localStorage.setItem('kittensList', JSON.stringify(data.results));
     kittenDataList = data.results;
     renderKittenList(kittenDataList);
 }).catch(error =>{
     console.log('Ha habido un error: ', error)
 })
-
+};
 
 
 function renderKitten(kittenData) {
@@ -117,16 +122,32 @@ function addNewKitten(event) {
                 race:valueRace,
                 desc:valueDesc,
             };
-            kittenDataList.push(newKittenDataObject);
-            inputDesc.value = '';
-            inputPhoto.value = '';
-            inputName.value = '';
-            inputRace.value = '';
-            renderKittenList(kittenDataList);
-        }
+            
+            fetch(`https://dev.adalab.es/api/kittens/${GITHUB_USER}`, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(newKittenDataObject),
+            })
+            .then((response) => response.json())
+                .then((data) => {
+                console.log(data);
+                if (data.success) {
+                    kittenDataList.push(newKittenDataObject); 
+                    localStorage.setItem('kittenDataList', JSON.stringify(kittenDataList)),
+                    inputDesc.value = '';
+                    inputPhoto.value = '';
+                    inputName.value = '';
+                    inputRace.value = '';
+                    renderKittenList(kittenDataList);    
+                } else {
+                    labelMessageError.innerHTML = "Error";
+                }
+            });
+        
     };   
 
-}
+    }
+}  
 
 //https://dev.adalab.es/maine-coon-cat.webp
 
