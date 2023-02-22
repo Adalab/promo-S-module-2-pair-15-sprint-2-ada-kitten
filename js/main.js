@@ -63,27 +63,45 @@ fetch(SERVER_URL, {
 
 
 function renderKitten(kittenData) {
-    const kitten = `<li class="card">
-    <article>
-      <img
-        class="card_img"
-        src=${kittenData.image}
-        alt="gatito"
-      />
-      <h3 class="card_title">${kittenData.name}</h3>
-      <h3 class="card_race">${kittenData.race}</h3>
-      <p class="card_description">
-      ${kittenData.desc}
-      </p>
-    </article>
-    </li>`;
-    return kitten;
+    const liElement = document.createElement('li');
+    const articleElement = document.createElement('article');
+    const imgElement = document.createElement('img');
+    const titleNameElement = document.createElement('h3');
+    const titleRaceElement = document.createElement('h3');
+    const descElement = document.createElement('p');
+
+    liElement.classList.add('card');
+
+    imgElement.classList.add('card_img');
+    imgElement.setAttribute('src', kittenData.image);
+    imgElement.setAttribute('alt', 'gatito');
+
+    titleNameElement.classList.add('card_title');
+    const contentName = document.createTextNode(kittenData.name);
+
+    titleRaceElement.classList.add('card_race');
+    const contentRace = document.createTextNode(kittenData.race);
+
+    descElement.classList.add('card_description');
+    const contentDesc = document.createTextNode(kittenData.desc);
+
+    liElement.appendChild(articleElement);
+    articleElement.appendChild(imgElement);
+    articleElement.appendChild(titleNameElement);
+    titleNameElement.appendChild(contentName);
+    articleElement.appendChild(titleRaceElement);
+    titleRaceElement.appendChild(contentRace);
+    articleElement.appendChild(descElement);
+    descElement.appendChild(contentDesc);
+
+    return liElement;
 }
 
 function renderKittenList(kittenDataList) {
     listElement.innerHTML = "";
     for (const kittenItem of kittenDataList) {
-        listElement.innerHTML += renderKitten(kittenItem);
+        const newLiItem = renderKitten(kittenItem);
+        listElement.appendChild(newLiItem);
     }
 }
 
@@ -117,7 +135,7 @@ function addNewKitten(event) {
         if (valueDesc !== "" && valuePhoto !== "" && valueName !== "") {
             labelMessageError.innerHTML = "Mola! Un nuevo gatito en Adalab!";
             const newKittenDataObject = {
-                photo:valuePhoto,
+                image:valuePhoto,
                 name:valueName,
                 race:valueRace,
                 desc:valueDesc,

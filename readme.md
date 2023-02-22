@@ -102,9 +102,9 @@ La solución del ejercicio completo se subirá al final del módulo, si en una s
 
 #### 2.14 Peticiones al servidor II
 
-- [ ] 1. **LISTADO:** Guardar en el local storage
-- [ ] 1. **BONUS - FORMULARIO:** Crear un nuevo gatito en el servidor
+- [x] 1. **LISTADO:** Guardar en el local storage
+- [x] 1. **BONUS - FORMULARIO:** Crear un nuevo gatito en el servidor
 
 #### 2.15 DOM Avanzado
 
-- [ ] 1. **LISTADO:** Cambiar a DOM Avanzado
+- [x] 1. **LISTADO:** Cambiar a DOM Avanzado
